@@ -3,6 +3,8 @@ const server = http.createServer( (req, res) => {
     // console.log(req);
     // console.log(res);
 
+    let start = performance.now();
+
     try {
         // Début MIDDLEWARE d'interception
         console.log(req.httpVersion, req.url, req.method);
@@ -12,22 +14,24 @@ const server = http.createServer( (req, res) => {
             // console.log(a);
             res.writeHead(200, { 'content-type': 'text/html' });    
             res.write("<h1>Homepage</h1>");
-            res.end();
             
         }
 
         else{
             res.writeHead(404, { 'content-type': 'text/html' });    
             res.write("<h1>404 not found ... cette page n'existe pas</h1>");
-            res.end();
     
         }
         
     } catch (error) {
         res.writeHead(500, { 'content-type': 'text/html' });    
         res.write("<h1>500 Internal error</h1>");
-        res.end();
     }
+
+    res.end();
+    
+    let end = performance.now();
+    console.log("la requête a pris ", end - start);
 });
 
 // Enveloppe 
